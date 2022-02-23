@@ -97,7 +97,7 @@ GameObject:
   - component: {fileID: 2999589191724483984}
   m_Layer: 0
   m_Name: Normal_Enemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -169,10 +169,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5fd1f57c1e7322b47b03c3390938eeaa, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minSpeed: 1
-  maxSpeed: 5
-  minSteerSpeed: -10
-  maxSteerSpeed: 10
+  row: 0
+  originalSpeed: 3
+  exitSpeed: 15
   verticalBound: 10
   horizontalBound: 10
 --- !u!65 &2999589191724483984

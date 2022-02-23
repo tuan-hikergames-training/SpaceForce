@@ -2,38 +2,44 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EnemyMovement : MonoBehaviour
+public class EnemyMovement : MovementBase
 {
   public int row;
 
-  [SerializeField] float verticalBound = 10f;
-  [SerializeField] float horizontalBound = 10f;
+  [SerializeField] float exitSpeed = 15f;
 
-  private ObjectToPool _objectToPool;
-  private float _speed = 3f;
-
+  private float _speed;
+  private bool _isExiting = false;
 
   void Start()
   {
     _objectToPool = GetComponent<ObjectToPool>();
+    _speed = speed;
   }
 
   void FixedUpdate()
   {
-    if (transform.position.z >= 1.5f * row)
+    if (_isExiting || transform.position.z >= 1.5f * row)
     {
       transform.Translate(_speed * Time.deltaTime * Vector3.forward);
-      float xPos = transform.position.x;
-      float zPos = transform.position.z;
-      if (!IsBetween(xPos, -horizontalBound, horizontalBound) || !IsBetween(zPos, -verticalBound, verticalBound))
-      {
-        _objectToPool.PoolManager.PushPool(gameObject);
-      }
+      MoveInBounds();
     }
   }
 
-  bool IsBetween(float value, float min, float max)
+  public void InitExitingSequence()
   {
-    return value >= min && value <= max;
+    Invoke(nameof(MarkExiting), 10f);
+  }
+
+  public void ResetExiting()
+  {
+    _speed = speed;
+    _isExiting = false;
+  }
+
+  void MarkExiting()
+  {
+    _speed = exitSpeed;
+    _isExiting = true;
   }
 }

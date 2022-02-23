@@ -65,6 +65,15 @@ public class ShootBullet : MonoBehaviour
           }
           break;
         }
+      case "Guided_Missle":
+        {
+          GameObject bullet = _objectPoolManager.ExtractPool();
+          if (bullet != null)
+          {
+            bullet.transform.position = transform.position;
+          }
+          break;
+        }
     }
   }
 

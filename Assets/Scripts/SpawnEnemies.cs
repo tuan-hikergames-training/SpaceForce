@@ -4,19 +4,22 @@ using UnityEngine;
 
 public class SpawnEnemies : MonoBehaviour
 {
+  [SerializeField] float verticalBound = 9f;
   [SerializeField] float horizontalSpace = 6f;
-  [SerializeField] float verticalSpace = 1.5f;
-  [SerializeField] float verticalOffset = 8f;
+  [SerializeField] int rowNum = 4;
   [SerializeField] int enemyPerWave = 20;
+  [SerializeField] float delayFirstWave = 2f;
+  [SerializeField] float waveInterval = 12f;
 
   private ObjectPoolManager _objectPoolManager;
 
   void Start()
   {
-    _objectPoolManager = GetComponent<ObjectPoolManager>();
+    GameObject enemyPools = GameObject.Find("Enemy_Pools");
+    _objectPoolManager = enemyPools.GetComponent<ObjectPoolManager>();
     _objectPoolManager.Initialize();
 
-    Spawn();
+    Invoke(nameof(Spawn), delayFirstWave);
   }
 
   void Update()
@@ -25,18 +28,21 @@ public class SpawnEnemies : MonoBehaviour
 
   void Spawn()
   {
-
+    int colNum = enemyPerWave / rowNum;
     for (int i = 0; i < enemyPerWave; i++)
     {
       GameObject enemy = _objectPoolManager.ExtractPool();
       if (enemy != null)
       {
-        int row = i % 4;
-        int col = i % 5;
+        int row = i / colNum;
+        int col = i % colNum;
         enemy.GetComponent<EnemyMovement>().row = row;
+        enemy.GetComponent<EnemyMovement>().ResetExiting();
+        enemy.GetComponent<EnemyMovement>().InitExitingSequence();
+        enemy.transform.position = new Vector3(col * (horizontalSpace / 2) - horizontalSpace, 0.25f, verticalBound);
         enemy.transform.Rotate(Vector3.up, 180f);
-        enemy.transform.position = new Vector3(col * (horizontalSpace / 2) - horizontalSpace, 0, row * verticalSpace + verticalOffset);
       }
     }
+    Invoke(nameof(Spawn), waveInterval);
   }
 }

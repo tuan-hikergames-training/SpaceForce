@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class SpaceCraftMovement : MonoBehaviour
 {
@@ -21,6 +22,14 @@ public class SpaceCraftMovement : MonoBehaviour
       float xPos = Mathf.Clamp(pointPos.x, -horizontalBound, horizontalBound);
       float zPos = Mathf.Clamp(pointPos.z, -verticalBound, verticalBound);
       transform.position = new Vector3(xPos, transform.position.y, zPos);
+    }
+  }
+
+  void OnTriggerEnter(Collider other)
+  {
+    if (other.CompareTag("Enemy"))
+    {
+      SceneManager.LoadScene("MainScene");
     }
   }
 }
