@@ -5,8 +5,10 @@ using UnityEngine;
 public class EnemyMovement : MovementBase
 {
   public int row;
+  public float enemyInterval;
 
   [SerializeField] float exitSpeed = 15f;
+  [SerializeField] float enemyBaseOffset = 2f;
 
   private float _speed;
   private bool _isExiting = false;
@@ -19,7 +21,7 @@ public class EnemyMovement : MovementBase
 
   void FixedUpdate()
   {
-    if (_isExiting || transform.position.z >= 1.5f * row)
+    if (_isExiting || transform.position.z >= 1.5f * row + enemyBaseOffset)
     {
       transform.Translate(_speed * Time.deltaTime * Vector3.forward);
       MoveInBounds();
@@ -28,7 +30,7 @@ public class EnemyMovement : MovementBase
 
   public void InitExitingSequence()
   {
-    Invoke(nameof(MarkExiting), 10f);
+    Invoke(nameof(MarkExiting), enemyInterval);
   }
 
   public void ResetExiting()

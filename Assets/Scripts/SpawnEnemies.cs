@@ -5,11 +5,14 @@ using UnityEngine;
 public class SpawnEnemies : MonoBehaviour
 {
   [SerializeField] float verticalBound = 9f;
-  [SerializeField] float horizontalSpace = 6f;
-  [SerializeField] int rowNum = 4;
-  [SerializeField] int enemyPerWave = 20;
+  [SerializeField] float horizontalSpace = 2f;
+  [SerializeField] int minEnemyColNum = 2;
+  [SerializeField] int maxEnemyColNum = 6;
+  [SerializeField] int minEnemyRowNum = 3;
+  [SerializeField] int maxEnemyRowNum = 5;
   [SerializeField] float delayFirstWave = 2f;
   [SerializeField] float waveInterval = 12f;
+  [SerializeField] float enemyInterval = 10f;
 
   private ObjectPoolManager _objectPoolManager;
 
@@ -28,18 +31,25 @@ public class SpawnEnemies : MonoBehaviour
 
   void Spawn()
   {
-    int colNum = enemyPerWave / rowNum;
+    int rowNum = Random.Range(minEnemyRowNum, maxEnemyRowNum + 1);
+    int colNum = Random.Range(minEnemyColNum, maxEnemyColNum + 1);
+    int enemyPerWave = rowNum * colNum;
+
+    float halfRange = ((colNum - 1) * horizontalSpace) / 2;
+
     for (int i = 0; i < enemyPerWave; i++)
     {
       GameObject enemy = _objectPoolManager.ExtractPool();
       if (enemy != null)
       {
+        EnemyMovement enemyMovementComp = enemy.GetComponent<EnemyMovement>();
         int row = i / colNum;
         int col = i % colNum;
-        enemy.GetComponent<EnemyMovement>().row = row;
-        enemy.GetComponent<EnemyMovement>().ResetExiting();
-        enemy.GetComponent<EnemyMovement>().InitExitingSequence();
-        enemy.transform.position = new Vector3(col * (horizontalSpace / 2) - horizontalSpace, 0.25f, verticalBound);
+        enemyMovementComp.row = row;
+        enemyMovementComp.enemyInterval = enemyInterval;
+        enemyMovementComp.ResetExiting();
+        enemyMovementComp.InitExitingSequence();
+        enemy.transform.position = new Vector3(col * horizontalSpace - halfRange, 0.25f, verticalBound);
         enemy.transform.Rotate(Vector3.up, 180f);
       }
     }

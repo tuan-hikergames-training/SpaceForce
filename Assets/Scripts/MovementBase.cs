@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+[RequireComponent(typeof(ObjectToPool))]
 public class MovementBase : MonoBehaviour
 {
   [SerializeField] float verticalBound = 4.5f;

@@ -2,7 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GetHit : MonoBehaviour
+[RequireComponent(typeof(ObjectToPool))]
+public class EnemyGetHit : MonoBehaviour
 {
   private ObjectToPool _objectToPool;
 

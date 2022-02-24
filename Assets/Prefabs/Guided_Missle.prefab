@@ -64,9 +64,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d61e37fa9f7fbe439d9548351c26c95, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  verticalBound: 4.5
-  horizontalBound: 6.5
-  speed: 5
+  verticalBound: 10
+  horizontalBound: 10
+  speed: 3
 --- !u!114 &7415757313127318424
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,9 +137,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde2bcdd29e9c4e49bac65a0aaa1b445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  guideSpeed: 0.5
-  finalGuideRadius: 12
-  steerSpeed: 20
+  steerSpeed: 50
+  radarExpandSpeed: 0.5
+  baseGuideRadius: 0.25
+  finalGuideRadius: 10
 --- !u!135 &5014673907981679078
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -151,7 +152,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &3780181116284122794
 GameObject:
