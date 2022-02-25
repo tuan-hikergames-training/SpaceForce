@@ -137,10 +137,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fde2bcdd29e9c4e49bac65a0aaa1b445, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  steerSpeed: 50
+  steerSpeed: 20
   radarExpandSpeed: 0.5
   baseGuideRadius: 0.25
   finalGuideRadius: 10
+  forward: {x: 0, y: 0, z: 0}
+  localForward: {x: 0, y: 0, z: 0}
 --- !u!135 &5014673907981679078
 SphereCollider:
   m_ObjectHideFlags: 0
